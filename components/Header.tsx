@@ -11,7 +11,7 @@ const Header = () => {
                 <Link href='/' className="font-bold text-xl uppercase text-gray-800 transition-all hover:text-gray-600 ">CineView</Link>
             </div>
             <div className='hidden md:flex'>
-                <Input size='md' width='320px' placeholder='Search...' contentRight={<SearchIcon/>}></Input>
+                <Input shadow={false} size='md' width='420px' placeholder='Search...' contentRight={<SearchIcon/>}></Input>
             </div>
             <div className='flex space-x-4 items-center'>
               
