@@ -25,7 +25,6 @@ const Home: NextPage<Props> = ({trendingMovies} : Props) => {
         <Hero trendingMovie={trendingMovies}/>
         {/* Video Sections */}
         <VideoListings trendingMovie={trendingMovies}/>
-
       </main>
       <Footer/>
       {/* Footer */}
