@@ -1,4 +1,5 @@
-import { Link, Input, Avatar } from "@nextui-org/react"
+import { Input, Avatar } from "@nextui-org/react"
+import  Link  from 'next/link'
 import { SearchIcon } from '@heroicons/react/outline'
 
 const Header = () => {
@@ -8,15 +9,15 @@ const Header = () => {
            
             <div>
 
-                <Link href='/' className="font-bold text-xl uppercase text-gray-800 transition-all hover:text-gray-600 ">CineView</Link>
+                <Link href='/' ><span className="font-bold text-xl uppercase text-gray-800 transition-all hover:text-gray-600 cursor-pointer">CineView</span></Link>
             </div>
             <div className='hidden md:flex'>
                 <Input shadow={false} size='md' width='420px' placeholder='Search...' contentRight={<SearchIcon/>}></Input>
             </div>
             <div className='flex space-x-4 items-center'>
               
-                    <Link href='/playlist' className="font-bold text-sm uppercase text-gray-800 transition-all hover:text-gray-600 ">Playlist</Link>
-                    <Link href='/playlist' className="font-bold text-sm uppercase text-gray-800 transition-all hover:text-gray-600 ">Login</Link>
+                    <Link shallow={true} href='/playlist' ><span className="font-bold text-sm uppercase text-gray-800 transition-all hover:text-gray-600 cursor-pointer">Playlist</span></Link>
+                    <Link shallow={true} href='/playlist' ><span className="font-bold text-sm uppercase text-gray-800 transition-all hover:text-gray-600 cursor-pointer">Login</span></Link>
                
                 <Avatar squared text='Usr'/>
             </div>

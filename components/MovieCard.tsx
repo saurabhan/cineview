@@ -6,7 +6,9 @@ import {
   CheckCircleIcon,
   PlusCircleIcon,
   ThumbUpIcon,
+  XIcon,
 } from '@heroicons/react/outline'
+import { useList } from '../utils/List-context'
 
 interface Props {
   movie: Movie
@@ -17,55 +19,23 @@ const baseUrl = 'https://image.tmdb.org/t/p/original/'
 const MovieCard = ({ movie }: Props) => {
   const [visible, setVisible] = useState(false)
   const closeHandler = () => setVisible(false)
-  const [trailer, setTrailer] = useState('')
   const [like, setLike] = useState(false)
-  const [addtolist, setAddtolist] = useState<string[]>([])
-
-
+  const {list, addtolist, fetchTrailer, trailer} = useList()
   function likeHandler() {
     console.log('added to playlist')
     setLike(!like)
   }
-
-  function addToListHandler() {
-      if(addtolist.includes(movie.id.toString())){
-          console.log("already in list")
-      }else{
-          const newMovie = [...addtolist, movie.id.toString()]
-          setAddtolist(newMovie)
-          console.log(addtolist)
-      }
+  
+  function onClickHandler(movie: Movie){
+    setVisible(true)
+    fetchTrailer(movie)
+    console.log('modal clicked')
   }
-  console.log(addtolist)
 
-  useEffect(() => {
-    if (!movie) return
-
-    async function fetchMovie() {
-      const data = await fetch(
-        `https://api.themoviedb.org/3/${
-          movie?.media_type === 'tv' ? 'tv' : 'movie'
-        }/${movie?.id}?api_key=${
-          process.env.NEXT_PUBLIC_API_KEY
-        }&language=en-US&append_to_response=videos`
-      )
-        .then((response) => response.json())
-        .catch((err) => console.log(err.message))
-
-      if (data?.videos) {
-        const index = data.videos.results.findIndex(
-          (trailers: Trailer) => trailers.type === 'Trailer'
-        )
-        setTrailer(data.videos?.results[index]?.key)
-      }
-    }
-
-    fetchMovie()
-  }, [movie])
 
   return (
     <div>
-      <Card cover hoverable clickable onClick={() => setVisible(true)}>
+      <Card cover hoverable clickable onClick={() => onClickHandler(movie)}>
         <Card.Image
           src={`${baseUrl}${movie?.backdrop_path || movie?.poster_path}`}
           height={240}
@@ -110,8 +80,8 @@ const MovieCard = ({ movie }: Props) => {
                   <ThumbUpIcon className="h-7 w-7" />
                 )}
               </Button>
-              <Button auto className="text-black" onClick={addToListHandler}>
-                {addtolist.includes(movie.id.toString()) ? (
+              <Button auto className="text-black" onClick={() => addtolist(movie)}>
+                {list?.includes(movie) ? (
                   <CheckCircleIcon className="h-7 w-7" />
                 ) : (
                   <PlusCircleIcon className="h-7 w-7" />
