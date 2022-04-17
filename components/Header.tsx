@@ -1,3 +1,4 @@
+
 import { Input, Avatar } from "@nextui-org/react"
 import  Link  from 'next/link'
 import { SearchIcon } from '@heroicons/react/outline'
@@ -8,6 +9,7 @@ const Header = () => {
         <div className="bg-white  flex items-center justify-between shadow-lg p-4 rounded-lg w-full transition-all md:max-w-7xl md:mx-auto">
            
             <div>
+
 
                 <Link href='/' ><span className="font-bold text-xl uppercase text-gray-800 transition-all hover:text-gray-600 cursor-pointer">CineView</span></Link>
             </div>
