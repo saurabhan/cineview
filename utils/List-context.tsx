@@ -1,9 +1,23 @@
 import { useState, useEffect, useContext, createContext } from 'react'
 import { Movie, Trailer } from '../typings'
 
+interface IListContext {
+  movies: Movie[],
+  list: Movie[],
+  addtolist: (movie: Movie) => void,
+  fetchTrailer: (movie: Movie) => Promise<void>,
+  trailer: string,
+
+}
 
 
-const ListContext = createContext()
+const ListContext = createContext<IListContext>({
+  movies:[],
+  list:[],
+  addtolist : ()=>{},
+  fetchTrailer : async ()=>{},
+  trailer:''
+})
 
 const useList = () => useContext(ListContext)
 
@@ -13,7 +27,7 @@ const ListProvider = ({ children }: any) => {
   const [list, setList] = useState<Movie[]>([])
   const [trailer, setTrailer] = useState('')
 
-  const [movies, setMovies] = useState<string[] | []>([])
+  const [movies, setMovies] = useState<Movie[] | []>([])
 
   const fetchMovie = async () => {
     const m = await fetch(

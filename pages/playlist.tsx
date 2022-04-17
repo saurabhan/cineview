@@ -1,6 +1,5 @@
 import Header from "../components/Header"
 import MovieCard from "../components/MovieCard"
-import { Movie } from "../typings"
 import { useList } from "../utils/List-context"
 
 const playlist = () => {
