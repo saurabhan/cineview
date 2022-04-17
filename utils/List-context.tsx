@@ -45,7 +45,7 @@ const ListProvider = ({ children }: any) => {
       }&language=en-US&append_to_response=videos`
     )
       .then((response) => response.json())
-      .catch((err) => console.log(err.message))
+      .catch((err) => console.error(err.message))
 
     if (data?.videos) {
       const index = data.videos.results.findIndex(

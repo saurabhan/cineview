@@ -22,14 +22,12 @@ const MovieCard = ({ movie }: Props) => {
   const [like, setLike] = useState(false)
   const {list, addtolist, fetchTrailer, trailer} = useList()
   function likeHandler() {
-    console.log('added to playlist')
     setLike(!like)
   }
   
   function onClickHandler(movie: Movie){
     setVisible(true)
     fetchTrailer(movie)
-    console.log('modal clicked')
   }
 
 
