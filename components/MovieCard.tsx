@@ -1,3 +1,4 @@
+
 import { Movie, Trailer } from '../typings'
 import { Button, Card, Modal, Text } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
