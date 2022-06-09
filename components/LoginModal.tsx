@@ -9,15 +9,13 @@ const LoginModal = (props: Props) => {
   const [password, setPassword] = React.useState<string | ''>('')
   const { signIn, signUp, user, logout } = useAuth()
   const [login, setLogin] = React.useState<boolean>(true)
-  console.log(user)
-  console.log(login)
+ 
 
   const handleSubmit = (
     e: React.MouseEvent,
     email: string,
     password: string
   ) => {
-    console.log('clicker')
     e.preventDefault()
     if (login) {
       signIn(email, password)
