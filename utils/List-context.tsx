@@ -137,7 +137,7 @@ const ListProvider = ({ children }: any) => {
 
 
   const addtoHistory = ( movie: Movie) => {
-    if (history?.includes(movie)) {
+    if (history?.find((m: Movie) => m.id === movie.id)) {
       const l = history.filter((item) => item !== movie)
       setHistory(l)
     } else {
