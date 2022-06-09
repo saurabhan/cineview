@@ -98,7 +98,7 @@ const LoginModal = (props: Props) => {
             <Modal.Footer>
               {login ? (
                 <>
-                  <Button auto flat color="error" onClick={closeHandler}>
+                  <Button auto flat color="error" onClick={(e) => handleSubmit(e, 'guest@test.com', 'test124')}>
                     Use Guest Login
                   </Button>
                   <Button
@@ -113,7 +113,7 @@ const LoginModal = (props: Props) => {
                 <Button
                   className="bg-brandamber"
                   auto
-                  onClick={(e) => handleSubmit(e, 'guest@test.com', 'test124')}
+                  onClick={(e) => handleSubmit(e, email, password)}
                 >
                   Sign Up
                 </Button>
