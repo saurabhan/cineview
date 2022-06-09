@@ -19,7 +19,7 @@ const Header = () => {
             <div className='flex space-x-4 items-center'>
               
                     <Link shallow={true} href='/playlist' ><span className="font-bold text-sm uppercase text-gray-800 transition-all hover:text-gray-600 cursor-pointer">Playlist</span></Link>
-                    <Link shallow={true} href='/playlist' ><span className="font-bold text-sm uppercase text-gray-800 transition-all hover:text-gray-600 cursor-pointer">Login</span></Link>
+                    <Link shallow={true} href='/auth' ><span className="font-bold text-sm uppercase text-gray-800 transition-all hover:text-gray-600 cursor-pointer">Login</span></Link>
                
                 <Avatar squared text='Usr'/>
             </div>

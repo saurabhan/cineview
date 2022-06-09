@@ -1,4 +1,5 @@
 import { Movie } from "../typings"
+import ThumbCard from "./Card/ThumbCard"
 import MovieCard from "./MovieCard"
 
 interface Props  {
@@ -16,7 +17,7 @@ const VideoListings = ({trendingMovie} : Props) => {
 
       {
           trendingMovie.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
+              <ThumbCard key={movie.id} movie={movie} />
           ))
       }
       </div>
