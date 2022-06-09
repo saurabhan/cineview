@@ -3,6 +3,7 @@ import { Movie, Trailer } from '../typings'
 import { Button, Card, Modal, Text } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player/lazy'
+import { motion } from 'framer-motion'
 import {
   CheckCircleIcon,
   PlusCircleIcon,
@@ -10,6 +11,8 @@ import {
   XIcon,
 } from '@heroicons/react/outline'
 import { useList } from '../utils/List-context'
+import Image from 'next/image'
+import { HiDotsVertical, HiPlay } from 'react-icons/hi'
 
 interface Props {
   movie: Movie
@@ -21,20 +24,21 @@ const MovieCard = ({ movie }: Props) => {
   const [visible, setVisible] = useState(false)
   const closeHandler = () => setVisible(false)
   const [like, setLike] = useState(false)
-  const {list, addtolist, fetchTrailer, trailer} = useList()
+  const {list, addtolist, fetchTrailer, trailer, addtoHistory} = useList()
   function likeHandler() {
     setLike(!like)
   }
   
   function onClickHandler(movie: Movie){
     setVisible(true)
+    addtoHistory(movie)
     fetchTrailer(movie)
   }
 
 
   return (
     <div>
-      <Card cover hoverable clickable onClick={() => onClickHandler(movie)}>
+      {/* <Card cover hoverable clickable onClick={() => onClickHandler(movie)}>
         <Card.Image
           src={`${baseUrl}${movie?.backdrop_path || movie?.poster_path}`}
           height={240}
@@ -46,7 +50,31 @@ const MovieCard = ({ movie }: Props) => {
             {movie.name || movie.title}
           </Text>
         </Card.Header>
-      </Card>
+      </Card> */}
+
+      <motion.div  className="flex flex-col"
+      onClick={() => onClickHandler(movie)}
+      >
+      <div className={`relative aspect-h-6 aspect-w-10 hover:grayscale cursor-pointer `}>
+      <div className='inset-0 rounded-xl opacity-0 text-brandwhite flex items-center justify-center z-10 hover:opacity-100'><HiPlay className='h-12 w-12'/>
+       
+      </div>
+        <Image
+          priority
+          src={`${baseUrl}${movie?.backdrop_path || movie?.poster_path}`}
+          layout={'fill'}
+          className="rounded-xl shadow-md"
+        />
+      </div>
+      <div className='p-2 flex justify-between items-center'>
+          <span>
+        <h1 className="font-bold text-xl dark:text-brandwhite">{movie.title || movie.original_name}</h1>
+        <p className="font-bold text-sm text-brandamber">{movie.vote_average}</p>
+
+          </span>
+        <HiDotsVertical/>
+      </div>
+    </motion.div>
 
       <div>
         <Modal

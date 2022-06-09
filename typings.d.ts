@@ -5,6 +5,7 @@ export interface Movie {
   release_date?: string
   first_air_date: string
   genre_ids: number[]
+  imdb_id: string
   id: number
   name: string
   origin_country: string[]
@@ -20,4 +21,5 @@ export interface Movie {
 export interface Trailer {
     type : 'Trailer'
     | 'Teaser'
+    | 'Clip'
 }
