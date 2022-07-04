@@ -65,7 +65,6 @@ const PlaylistModal = (props: Props) => {
           <h1 className="text-2xl">Add to Playlist</h1>
         </Modal.Header>
         <Modal.Body>
-          <h1>Hello</h1>
           <Checkbox.Group
             color="warning"
             value={selected}
