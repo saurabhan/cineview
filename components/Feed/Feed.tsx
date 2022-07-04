@@ -2,7 +2,6 @@ import React from 'react'
 import { Movie } from '../../typings'
 import ThumbCard from '../Card/ThumbCard'
 import { AnimatePresence, motion } from 'framer-motion'
-import MovieCard from '../MovieCard'
 
 interface Props {
   trendingMovie: Movie[]

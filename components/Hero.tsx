@@ -16,16 +16,16 @@ const Hero = ({ trendingMovie }: Props) => {
   }, [trendingMovie])
 
   return (
-    <div className="flex flex-col text-brandwhite space-y-2 py-16 h-[45vh] md:space-y-4 lg:h-[85vh] lg:justify-end lg:pb-12">
-      <div className="absolute inset-0 h-[45vh] lg:h-[85vh] w-screen">
+    <div className="flex h-[45vh] flex-col space-y-2 py-16 text-brandwhite md:space-y-4 lg:h-[85vh] lg:justify-end lg:pb-12">
+      <div className="absolute inset-0 h-[45vh] w-screen lg:h-[85vh]">
         <Image
           src={`${baseUrl}${movie?.backdrop_path || movie?.poster_path}`}
           layout="fill"
           objectFit="cover"
         />
       </div>
-      <div className="z-20 text-center pt-52">
-        <h1 className=" text-2xl font-bold text-white md:text-4xl lg:text-7xl">
+      <div className="z-20 pt-52 text-center">
+        <h1 className=" text-white text-2xl font-bold md:text-4xl lg:text-7xl">
           {movie?.title || movie?.name || movie?.original_name}
         </h1>
       </div>

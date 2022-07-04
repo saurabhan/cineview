@@ -1,6 +1,5 @@
 import { Movie } from "../typings"
 import ThumbCard from "./Card/ThumbCard"
-import MovieCard from "./MovieCard"
 
 interface Props  {
     trendingMovie : Movie[]
