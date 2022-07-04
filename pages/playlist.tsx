@@ -1,34 +1,42 @@
-
-import ThumbCard from "../components/Card/ThumbCard"
-import { useAuth } from "../utils/AuthContext"
-import { useList } from "../utils/List-context"
+import ThumbCard from '../components/Card/ThumbCard'
+import { Movie } from '../typings'
+import { useAuth } from '../utils/AuthContext'
+import { useList } from '../utils/List-context'
 
 const playlist = () => {
-
-     const { list } = useList()
-     const { user} = useAuth()
+  const { playlist } = useList()
+  const { user } = useAuth()
 
   return (
-      <div>
-        <div className='pt-40'>
-      <h1 className='text-4xl font-bold text-center'>Playlist</h1>
-      {
-        user ? 
-      <div className='grid grid-cols-1 p-4 gap-5 md:max-w-7xl md:mx-auto md:grid-cols-3'>
-
-      {
-          list?.map((item) => (
-              <ThumbCard key={item.id} movie={item} />
-          ))
-      }
+    <div className="h-screen">
+      <div className="pt-4">
+        <h1 className="text-center text-4xl font-bold">Playlist</h1>
+        {user ? (
+          <div>
+            {playlist &&
+              Object.keys(playlist).map((item) => (
+                <>
+                  <div className="mx-auto p-4 md:max-w-7xl">
+                    <h1 className="text-2xl">{item}</h1>
+                  </div>
+                  <div>
+                    {(playlist[item as keyof typeof playlist] as any).map(
+                      (item: Movie) => (
+                        <div className="grid grid-cols-1 gap-5 p-4 md:mx-auto md:max-w-7xl md:grid-cols-3">
+                          <ThumbCard key={item.id} movie={item} />
+                        </div>
+                      )
+                    )}
+                  </div>
+                </>
+              ))}
+          </div>
+        ) : (
+          <div>
+            <h1 className="text-center text-brandred">Please Login</h1>
+          </div>
+        )}
       </div>
-      :
-      <div>
-        <h1 className="text-center text-brandred">Please Login</h1>
-      </div>
-      }
-    </div>
-        
     </div>
   )
 }

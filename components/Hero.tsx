@@ -16,7 +16,7 @@ const Hero = ({ trendingMovie }: Props) => {
   }, [trendingMovie])
 
   return (
-    <div className="flex flex-col space-y-2 py-16 h-[45vh] md:space-y-4 lg:h-[85vh] lg:justify-end lg:pb-12">
+    <div className="flex flex-col text-brandwhite space-y-2 py-16 h-[45vh] md:space-y-4 lg:h-[85vh] lg:justify-end lg:pb-12">
       <div className="absolute inset-0 h-[45vh] lg:h-[85vh] w-screen">
         <Image
           src={`${baseUrl}${movie?.backdrop_path || movie?.poster_path}`}
