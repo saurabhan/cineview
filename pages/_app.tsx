@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ListProvider>
           <Navbar />
           <Component {...pageProps} />
-          <Footer/>
+          <Footer />
         </ListProvider>
       </AuthProvider>
     </NextUIProvider>

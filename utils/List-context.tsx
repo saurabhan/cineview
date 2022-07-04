@@ -9,9 +9,16 @@ interface IListContext {
   actionMovies: Movie[]
   romanceMovies: Movie[]
   list: Movie[]
+  liked: Movie[]
   history: Movie[]
+  createList: (listname: string) => void
+  playlist: {}
+  isPresent: boolean
+  addtoLiked: (movie: Movie) => void
   addtoHistory: (movie: Movie) => void
-  addtolist: (movie: Movie) => void
+  clearHistory: () => void
+  removeFromHistory: (movie: Movie) => void
+  addtolist: (movie: Movie, name: string) => void
   fetchMoviebyId: (id: Number, media: string) => Promise<any>
   fetchTrailer: (movie: Movie) => Promise<void>
   trailer: string
@@ -25,8 +32,15 @@ const ListContext = createContext<IListContext>({
   actionMovies: [],
   romanceMovies: [],
   list: [],
+  createList: () => {},
+  playlist: {},
+  liked: [],
   history: [],
+  isPresent: false,
+  clearHistory: () => {},
+  removeFromHistory: () => {},
   addtoHistory: () => {},
+  addtoLiked: () => {},
   addtolist: () => {},
   fetchMoviebyId: async () => {},
   fetchTrailer: async () => {},
@@ -39,6 +53,9 @@ const ListProvider = ({ children }: any) => {
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY
   const BASE_URL = 'https://api.themoviedb.org/3'
   const [list, setList] = useState<Movie[]>([])
+  const [playlist, setPlaylist]: any = useState<[]>()
+  const [isPresent, setIsPresent]: any = useState<boolean>(false)
+  const [liked, setLiked] = useState<Movie[]>([])
   const [trailer, setTrailer] = useState('')
   const [history, setHistory] = useState<Movie[]>([])
   const [movies, setMovies] = useState<Movie[] | []>([])
@@ -88,18 +105,13 @@ const ListProvider = ({ children }: any) => {
     sethorrorMovies(horrorMovies.results)
     setactionMovies(actionMovies.results)
     setromanceMovies(romanceMovies.results)
-    
   }
 
   const fetchTrailer = async (movie: Movie) => {
-    const movieID =  movie?.id
+    const movieID = movie?.id
     const media_type = movie?.media_type === 'movie' ? 'movie' : 'tv'
     const data = await fetch(
-      `https://api.themoviedb.org/3/${
-        media_type
-      }/${movieID}?api_key=${
-        process.env.NEXT_PUBLIC_API_KEY
-      }&language=en-US&append_to_response=videos`
+      `https://api.themoviedb.org/3/${media_type}/${movieID}?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&append_to_response=videos`
     )
       .then((response) => response.json())
       .catch((err) => console.error(err.message))
@@ -116,34 +128,52 @@ const ListProvider = ({ children }: any) => {
     const data = await fetch(
       `https://api.themoviedb.org/3/search/multi?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&query=${media}&page=1&include_adult=true`
     ).then((response) => response.json())
-    const result = data.results.find(
-      (movie: Movie) => movie.id === id 
-    )
+    const result = data.results.find((movie: Movie) => movie.id === id)
     fetchTrailer(result)
     return result
-      
   }
 
-  const addtolist = (movie: Movie) => {
-    const r = list.find((m: Movie) => m.id === movie.id)
+  const createList = (listname: string) => {
+    setPlaylist({ ...playlist, [listname]: [] })
+  }
+
+  const addtolist = (movie: Movie, name: string) => {
+    const list = playlist[name as keyof typeof playlist] as any
+    const r = list.find((m: Movie) => m.id === movie.id) ? true : false
+
     if (r) {
-      const l = list.filter((item) => item.id !== movie.id)
-      setList(l)
+      const l = list.filter((item: Movie) => item.id !== movie.id)
+      setIsPresent(false)
+      setPlaylist({ ...playlist, [name as keyof typeof playlist]: l })
     } else {
-      setList([...list, movie])
+      const newList = [...playlist[name as keyof typeof playlist], movie]
+      setIsPresent(true)
+      setPlaylist({ ...playlist, [name as keyof typeof playlist]: newList })
+    }
+  }
+  const addtoLiked = (movie: Movie) => {
+    const r = liked.find((m: Movie) => m.id === movie.id)
+    if (r) {
+      const l = liked.filter((item) => item.id !== movie.id)
+      setLiked(l)
+    } else {
+      setLiked([...liked, movie])
     }
   }
 
-
-
-  const addtoHistory = ( movie: Movie) => {
+  const addtoHistory = (movie: Movie) => {
     if (history?.find((m: Movie) => m.id === movie.id)) {
-      const l = history.filter((item) => item !== movie)
-      setHistory(l)
+      // const l = history.filter((item) => item !== movie)
+      // setHistory(l)
     } else {
       setHistory([...history, movie])
     }
   }
+
+  const clearHistory = () => setHistory([])
+
+  const removeFromHistory = (movie: Movie) =>
+    setHistory([...history.filter((item) => item !== movie)])
 
   useEffect(() => {
     fetchMovie()
@@ -154,15 +184,22 @@ const ListProvider = ({ children }: any) => {
     <ListContext.Provider
       value={{
         addtolist,
+        liked,
         list,
         movies,
         topRated,
         comedyMovies,
+        isPresent,
+        createList,
+        playlist,
         horrorMovies,
         actionMovies,
         romanceMovies,
         addtoHistory,
+        addtoLiked,
         history,
+        clearHistory,
+        removeFromHistory,
         fetchTrailer,
         fetchMoviebyId,
         trailer,

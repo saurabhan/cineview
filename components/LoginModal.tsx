@@ -9,7 +9,6 @@ const LoginModal = (props: Props) => {
   const [password, setPassword] = React.useState<string | ''>('')
   const { signIn, signUp, user, logout } = useAuth()
   const [login, setLogin] = React.useState<boolean>(true)
- 
 
   const handleSubmit = (
     e: React.MouseEvent,
@@ -35,10 +34,8 @@ const LoginModal = (props: Props) => {
 
   return (
     <div>
-      <Button auto shadow className="bg-brandamber" onClick={handler}>
-       {
-         user ? 'Logout' : 'Login'
-       }
+      <Button auto className="bg-brandamber shadow-lg" onClick={handler}>
+        {user ? 'Logout' : 'Login'}
       </Button>
       <Modal closeButton open={visible} onClose={closeHandler}>
         {user ? (
@@ -96,7 +93,14 @@ const LoginModal = (props: Props) => {
             <Modal.Footer>
               {login ? (
                 <>
-                  <Button auto flat color="error" onClick={(e) => handleSubmit(e, 'guest@test.com', 'test124')}>
+                  <Button
+                    auto
+                    flat
+                    color="error"
+                    onClick={(e) =>
+                      handleSubmit(e, 'guest@test.com', 'test124')
+                    }
+                  >
                     Use Guest Login
                   </Button>
                   <Button
