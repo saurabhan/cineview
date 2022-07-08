@@ -8,7 +8,7 @@ const playlist = () => {
   const { user } = useAuth()
 
   return (
-    <div className="h-screen">
+    <div className="min-h-screen">
       <div className="pt-4">
         <h1 className="text-center text-4xl font-bold">Playlist</h1>
         {user ? (
@@ -20,13 +20,13 @@ const playlist = () => {
                     <h1 className="text-2xl">{item}</h1>
                   </div>
                   <div>
+                    <div className="grid grid-cols-1 gap-5 p-4 md:mx-auto md:max-w-7xl md:grid-cols-3">
                     {(playlist[item as keyof typeof playlist] as any).map(
                       (item: Movie) => (
-                        <div className="grid grid-cols-1 gap-5 p-4 md:mx-auto md:max-w-7xl md:grid-cols-3">
                           <ThumbCard key={item.id} movie={item} />
-                        </div>
-                      )
+                          )
                     )}
+                          </div>
                   </div>
                 </>
               ))}

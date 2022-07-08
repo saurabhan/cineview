@@ -86,6 +86,7 @@ const PlaylistModal = (props: Props) => {
           <Input
             placeholder="Enter playlist name"
             onChange={(e) => setInputValue(e.target.value)}
+            value={inputValue}
           />
         </Modal.Body>
         <Modal.Footer>
