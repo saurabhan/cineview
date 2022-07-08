@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext, createContext } from 'react'
+import toast from 'react-hot-toast'
 import { Movie, Trailer } from '../typings'
 
 interface IListContext {
@@ -134,7 +135,14 @@ const ListProvider = ({ children }: any) => {
   }
 
   const createList = (listname: string) => {
-    setPlaylist({ ...playlist, [listname]: [] })
+    if(listname === ''){
+      toast.error('Playlist name is required', {
+        duration: 2000,
+        position: 'bottom-center',
+      })
+    }else{
+      setPlaylist({ ...playlist, [listname]: [] })
+    }
   }
 
   const addtolist = (movie: Movie, name: string) => {
